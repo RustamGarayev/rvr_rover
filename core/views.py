@@ -16,7 +16,8 @@ class BaseIndexView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BaseIndexView, self).get_context_data(**kwargs)
 
-        context['team_id'] = Setting.objects.first().team_id
+        setting_obj = Setting.objects.first()
+        context['team_id'] = setting_obj.team_id if setting_obj else "No Team ID"
 
         return context
 
@@ -35,8 +36,7 @@ def export_sensor_data_csv(request):
 
     sensor_data = SensorReading.objects.all().order_by('id').values_list(
         'working_duration', 'number_of_telemetry_packets', 'battery_voltage', 'altitude', 'velocity', 'temperature',
-        'no2_level_in_ppm', 'co_level_in_ppm', 'h2_level_in_ppm', 'gps_latitude', 'gps_longitude', 'gps_altitude',
-        'has_recording_started', 'departure_time'
+        'no2_level_in_ppm', 'co_level_in_ppm', 'h2_level_in_ppm', 'gps_latitude', 'gps_longitude', 'gps_altitude'
     )
 
     clean_sensor_data = map(lambda x: (TEAM_ID,) + x, sensor_data)
@@ -45,14 +45,3 @@ def export_sensor_data_csv(request):
         writer.writerow(sensor_reading)
 
     return response
-
-
-# def start_sensor_reading(request):
-#     if request.method == 'POST':
-#         start_reading_data()
-#
-#         site_setting = Setting.objects.first()
-#         site_setting.enable_sensor_reading = True
-#         site_setting.save()
-#
-#         return HttpResponse('OK')

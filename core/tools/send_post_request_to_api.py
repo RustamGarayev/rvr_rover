@@ -22,8 +22,6 @@ for i in range(60):
         "gps_latitude": 40.4093,
         "gps_longitude": 49.8671,
         "gps_altitude": -28.0,
-        "has_recording_started": True,
-        "departure_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
         "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
         "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
     }

@@ -30,9 +30,6 @@ class SensorReading(models.Model):
     gps_longitude = models.FloatField(default=0.0, blank=True)
     gps_altitude = models.FloatField(default=0.0, blank=True)
 
-    has_recording_started = models.BooleanField(default=False, blank=True)
-    departure_time = models.DateTimeField(null=True)
-
     # logs
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

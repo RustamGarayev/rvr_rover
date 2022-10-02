@@ -19,13 +19,14 @@ class GraphConsumer(AsyncJsonWebsocketConsumer):
     def __sensor_reading_to_json(sensor_reading):
         keys_to_remove = ('_state', 'id', 'departure_time', 'created_at', 'updated_at', 'has_recording_started')
 
-        reading_as_dict = sensor_reading.__dict__
+        if sensor_reading:
+            reading_as_dict = sensor_reading.__dict__
 
-        # Remove unnecessary keys from dictionary
-        for k in keys_to_remove:
-            reading_as_dict.pop(k, None)
+            # Remove unnecessary keys from dictionary
+            for k in keys_to_remove:
+                reading_as_dict.pop(k, None)
 
-        return reading_as_dict
+            return reading_as_dict
 
     @staticmethod
     @sync_to_async
