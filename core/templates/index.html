@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load l10n %}
+
+{% block extra_js %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h1 style="color: #585858; text-align: center; margin: 10px 0 10px 0;">{% trans 'Monitoring' %}</h1>
+    <div class="chart-row-m0">
+        <div class="container">
+            <canvas id="battery-voltage-graph" width="277" height="186"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="altitude-graph" width="277" height="186"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="velocity-graph" width="277" height="186"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="temperature-graph" width="277" height="186"></canvas>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="main-left">
+            <section class="control-section">
+                <h2 style="text-align: center; color: #585858;">{% trans 'Control Panel' %}</h2>
+                <button class="control-buttons" id="start-button">{% trans 'Start' %}</button>
+                <div class="control-container">
+                    <div class="control-group">
+                        <button class="control-buttons" id="reset-button">{% trans 'Reset' %}</button>
+                    </div>
+                    <div class="control-group">
+                        <form action="{% url 'core:export_sensor_data_csv' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" id="save-stop-button">{% trans 'Save & Stop' %}</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="main-right">
+            <section class="basic-info-section-right">
+                <div class="basic-info-container">
+                    <div class="basic-info-group">
+                        <label for="team-id">{% trans 'Software State' %}</label>
+                        <input type="text" id="software-state" readonly value="Off" autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="number_of_telemetry_packets">{% trans 'Packet Count' %}</label>
+                        <input type="text" id="number_of_telemetry_packets" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="working_duration">{% trans 'Working Duration' %}</label>
+                        <input type="text" id="working_duration" readonly autocomplete="off">
+                    </div>
+                </div>
+                <div class="basic-info-container">
+                    <div class="basic-info-group">
+                        <label for="no2_level_in_ppm">{% trans 'Humidity (%)' %}</label>
+                        <input type="text" id="no2_level_in_ppm" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="co_level_in_ppm">{% trans 'Laudness (db)' %}</label>
+                        <input type="text" id="co_level_in_ppm" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="h2_level_in_ppm">{% trans 'Distance (m)' %}</label>
+                        <input type="text" id="h2_level_in_ppm" readonly autocomplete="off">
+                    </div>
+                </div>
+                <div class="basic-info-container">
+                    <div class="basic-info-group">
+                        <label for="velocity">{% trans 'Pressure (mBar)' %}</label>
+                        <input type="text" id="velocity" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="battery_voltage">{% trans 'Voltage (V)' %}</label>
+                        <input type="text" id="battery_voltage" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="altitude">{% trans 'Current (A)' %}</label>
+                        <input type="text" id="altitude" readonly autocomplete="off">
+                    </div>
+                </div>
+                <div class="basic-info-container">
+                    <div class="basic-info-group">
+                        <label for="gps_latitude">{% trans 'GPS Lattitude' %}</label>
+                        <input type="text" id="gps_latitude" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="gps_longitude">{% trans 'GPS Longtitude' %}</label>
+                        <input type="text" id="gps_longitude" readonly autocomplete="off">
+                    </div>
+                    <div class="basic-info-group">
+                        <label for="gps_altitude">{% trans 'GPS Altitude' %}</label>
+                        <input type="text" id="gps_altitude" readonly autocomplete="off">
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="chart-row-m0">
+        <div class="container">
+            <canvas id="no2-graph" width="277" height="186"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="co-graph" width="277" height="186"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="h2-graph" width="277" height="186"></canvas>
+        </div>
+        <div class="container">
+            <canvas id="gps-graph" width="277" height="186"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'client/js/graphClass.js' %}"></script>
+    <script src="{% static 'client/js/helperFunctions.js' %}"></script>
+    <script src="{% static 'client/js/customGraph.js' %}"></script>
+{% endblock %}
