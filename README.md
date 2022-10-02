@@ -11,6 +11,7 @@ RVR rover lab” contains 2 main parts called rover lab and software. In the rov
 - DRF
 - ChartJS
 - Docker
+- PostgreSQL
 
 # Setup
 First things first, install the dependencies:
